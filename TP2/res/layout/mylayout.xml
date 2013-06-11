@@ -8,7 +8,7 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -17,11 +17,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewPart1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/textViewTitle"
             android:layout_margin="10dp"
             android:text="Partie 1 : "
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -30,43 +30,44 @@
             android:id="@+id/editText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView2"
-            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignBaseline="@+id/textViewPart1"
+            android:layout_alignBottom="@+id/textViewPart1"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:layout_toRightOf="@+id/textView2"
-            android:ems="10" >
+            android:layout_toRightOf="@+id/textViewPart1"
+            android:ems="10"
+            android:inputType="number" >
 
             <requestFocus />
         </EditText>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewPart2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignRight="@id/textView1"
+            android:layout_alignRight="@id/textViewTitle"
             android:layout_below="@+id/editText1"
             android:layout_margin="10dp"
             android:text="Partie 2"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewPart2Content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView3"
-            android:layout_alignBottom="@+id/textView3"
+            android:layout_alignBaseline="@+id/textViewPart2"
+            android:layout_alignBottom="@+id/textViewPart2"
             android:layout_margin="10dp"
-            android:layout_toRightOf="@+id/textView2"
-            android:text="Medium Text"
+            android:layout_toRightOf="@+id/textViewPart1"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView3"
+            android:layout_below="@+id/textViewPart2"
             android:layout_margin="10dp"
             android:text="Résultat"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -77,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView5" >
+            android:layout_below="@+id/textViewResult" >
 
             <Button
                 android:id="@+id/button1"
@@ -110,21 +111,21 @@
             android:layout_below="@+id/linearLayout1" >
 
             <Button
-                android:id="@+id/Button4"
+                android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="4" />
 
             <Button
-                android:id="@+id/Button5"
+                android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="5" />
 
             <Button
-                android:id="@+id/Button6"
+                android:id="@+id/button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -140,21 +141,21 @@
             android:layout_below="@+id/linearLayout2" >
 
             <Button
-                android:id="@+id/Button7"
+                android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="7" />
 
             <Button
-                android:id="@+id/Button8"
+                android:id="@+id/button8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="8" />
 
             <Button
-                android:id="@+id/Button9"
+                android:id="@+id/button9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -170,21 +171,21 @@
             android:layout_below="@+id/linearLayout3" >
 
             <Button
-                android:id="@+id/Button10"
+                android:id="@+id/buttonEff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Eff" />
 
             <Button
-                android:id="@+id/Button11"
+                android:id="@+id/buttonRAZ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="RAZ" />
 
             <Button
-                android:id="@+id/Button12"
+                android:id="@+id/button0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -200,33 +201,42 @@
             android:layout_margin="10dp" >
 
             <Button
-                android:id="@+id/button13"
+                android:id="@+id/buttonPlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="+" />
 
             <Button
-                android:id="@+id/button14"
+                android:id="@+id/buttonLess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="-" />
 
             <Button
-                android:id="@+id/button15"
+                android:id="@+id/buttonDiv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="/" />
 
             <Button
-                android:id="@+id/button16"
+                android:id="@+id/buttonMulti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="*" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewResultContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewResult"
+            android:layout_toRightOf="@+id/textViewResult"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
 
 </ScrollView>
