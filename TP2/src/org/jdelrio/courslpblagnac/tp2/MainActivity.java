@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Button buttonDiv;
 	private Button buttonMulti;
 	private TextView textViewPart2Content;
-	private TextView textViewResult;
+	private TextView textViewResultContent;
 	private EditText editText1;
 
 	@Override
@@ -79,8 +79,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		buttonMulti = (Button) findViewById(R.id.buttonMulti);
 		buttonMulti.setOnClickListener(this);
 		textViewPart2Content = (TextView) findViewById(R.id.textViewPart2Content);
-		textViewResult = (TextView) findViewById(R.id.textViewResult);
-		editText1 = (EditText) findViewById(R.id.editText1);
+		textViewResultContent = (TextView) findViewById(R.id.textViewResultContent);
+		editText1 = (EditText) findViewById(R.id.editTextPart1Content1);
 	}
 
 	@Override
@@ -89,13 +89,13 @@ public class MainActivity extends Activity implements OnClickListener {
 				|| v == b6 || v == b7 || v == b8 || v == b9) {
 			textViewPart2Content.setText(textViewPart2Content.getText()
 					+ ((Button) v).getText().toString());
-		} else if (v == buttonEff) {
-			textViewPart2Content.setText("0");
 		} else if (v == buttonRAZ) {
+			textViewPart2Content.setText("0");
+		} else if (v == buttonEff) {
 			String text = textViewPart2Content.getText().toString();
 			if (text.length() > 0) {
 				textViewPart2Content.setText(text.subSequence(0,
-						text.length() - 2));
+						text.length() - 1));
 			} else {
 				textViewPart2Content.setText("0");
 			}
@@ -113,7 +113,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			} else if (v == buttonMulti) {
 				res = part1 * part2;
 			}
-			textViewResult.setText("" + res);
+			textViewResultContent.setText(Integer.toString(res));
 		}
 
 	}

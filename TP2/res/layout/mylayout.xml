@@ -27,7 +27,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/editTextPart1Content1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textViewPart1"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/textViewTitle"
-            android:layout_below="@+id/editText1"
+            android:layout_below="@+id/editTextPart1Content1"
             android:layout_margin="10dp"
             android:text="Partie 2"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -70,6 +70,15 @@
             android:layout_below="@+id/textViewPart2"
             android:layout_margin="10dp"
             android:text="Résultat"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textViewResultContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewResult"
+            android:layout_toRightOf="@+id/textViewResult"
+            android:text="0"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
@@ -228,15 +237,6 @@
                 android:layout_weight="1"
                 android:text="*" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewResultContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewResult"
-            android:layout_toRightOf="@+id/textViewResult"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
 
 </ScrollView>
