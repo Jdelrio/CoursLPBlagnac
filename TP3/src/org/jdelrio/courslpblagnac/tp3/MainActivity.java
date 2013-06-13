@@ -49,6 +49,16 @@ public class MainActivity extends Activity {
 		textViewEtatCalcul.setText("Calcul en cours");
 	}
 
+	private void doMyLongCalcul() {
+		try {
+			progressBar2.setProgress(0);
+			Thread.sleep(10000);
+			progressBar2.setProgress(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void doMyCalcul() {
 		try {
 			progressBar2.setProgress(0);
@@ -78,6 +88,6 @@ public class MainActivity extends Activity {
 	}
 
 	private void endCalcul() {
-		textViewEtatCalcul.setText("Calcul stoppé");
+		textViewEtatCalcul.setText("Calcul stoppÃ©");
 	}
 }
