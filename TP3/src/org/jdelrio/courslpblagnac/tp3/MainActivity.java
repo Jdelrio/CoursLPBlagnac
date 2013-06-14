@@ -1,6 +1,7 @@
 package org.jdelrio.courslpblagnac.tp3;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ public class MainActivity extends Activity {
 	private ProgressBar progressBar2;
 	private TextView textViewEtatCalcul;
 	private EditText editTextVariable;
+	private Button buttonShare;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,20 @@ public class MainActivity extends Activity {
 			}
 		});
 		editTextVariable = (EditText) findViewById(R.id.editTextVariable);
+		buttonShare = (Button) findViewById(R.id.buttonShar);
+		buttonShare.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String text = editTextVariable.getText().toString();
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TEXT, text);
+				intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Title");
+
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
