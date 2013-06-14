@@ -27,13 +27,6 @@
             android:layout_margin="10dp"
             android:text="Langue" />
 
-        <EditText
-            android:id="@+id/editTextOnRotation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="" />
-
         <ProgressBar
             android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyleLarge"
@@ -79,6 +72,23 @@
             android:layout_height="0px"
             android:focusable="true"
             android:focusableInTouchMode="true" />
+
+        <EditText
+            android:id="@+id/editTextVariable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/buttonShar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Partager" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	private TextView textViewLangue;
 	private ProgressBar progressBar2;
 	private TextView textViewEtatCalcul;
-	private EditText editTextOnRotation;
+	private EditText editTextVariable;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 		buttonStartCalculNormal = (Button) findViewById(R.id.buttonStartCalculNormal);
 		buttonStartCalculThread = (Button) findViewById(R.id.buttonStartCalculThread);
 		buttonStartCalculAsyncTask = (Button) findViewById(R.id.buttonStartCalculAsyncTask);
-		editTextOnRotation = (EditText) findViewById(R.id.editTextOnRotation);
+		editTextVariable = (EditText) findViewById(R.id.editTextVariable);
 	}
 
 	@Override
