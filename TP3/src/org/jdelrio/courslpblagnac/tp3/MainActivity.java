@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(Intent.ACTION_SEND);
 				intent.setType("text/plain");
 				intent.putExtra(Intent.EXTRA_TEXT, text);
-				intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Title");
+				 intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Title");
 
 				startActivity(intent);
 			}
