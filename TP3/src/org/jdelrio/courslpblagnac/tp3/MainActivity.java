@@ -1,8 +1,10 @@
 package org.jdelrio.courslpblagnac.tp3;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +28,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d("Lifecycle", "onCreate");
 		setContentView(R.layout.activity_main);
 		textViewLangue = (TextView) findViewById(R.id.textViewLangue);
 		textViewOrientation = (TextView) findViewById(R.id.textViewOrientation);
@@ -33,9 +36,97 @@ public class MainActivity extends Activity {
 		progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
 		progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
 		buttonStartCalculNormal = (Button) findViewById(R.id.buttonStartCalculNormal);
+		buttonStartCalculNormal.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startCalcul();
+				doMyCalcul();
+				endCalcul();
+			}
+		});
 		buttonStartCalculThread = (Button) findViewById(R.id.buttonStartCalculThread);
+		buttonStartCalculThread.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startCalcul();
+				Thread t1 = new Thread(new Runnable() {
+					public void run() {
+						doMyCalcul();
+					}
+				});
+				t1.start();
+				endCalcul();
+			}
+		});
 		buttonStartCalculAsyncTask = (Button) findViewById(R.id.buttonStartCalculAsyncTask);
+		buttonStartCalculAsyncTask.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				AsyncTask<Void, String, Void> at1 = new AsyncTask<Void, String, Void>() {
+
+					@Override
+					protected void onPreExecute() {
+						startCalcul();
+						super.onPreExecute();
+					}
+
+					@Override
+					protected Void doInBackground(Void... params) {
+						doMyCalcul();
+						publishProgress("10%");
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void result) {
+						endCalcul();
+						super.onPostExecute(result);
+					}
+
+					@Override
+					protected void onProgressUpdate(String... values) {
+						// editText.setText(values);
+						super.onProgressUpdate(values);
+					}
+				};
+				at1.execute();
+				doMyLongCalcul();
+			}
+		});
 		editTextVariable = (EditText) findViewById(R.id.editTextVariable);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		Log.d("Lifecycle", "onRestoreInstanceState");
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	@Override
+	protected void onResume() {
+		Log.d("Lifecycle", "onResume");
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		Log.d("Lifecycle", "onPause");
+		super.onPause();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		Log.d("Lifecycle", "onSaveInstanceState");
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onDestroy() {
+		Log.d("Lifecycle", "onDestroy");
+		super.onDestroy();
 	}
 
 	@Override
