@@ -96,6 +96,11 @@ public class StringListFragment extends ListFragment {
 					.getInt(STATE_ACTIVATED_POSITION));
 		}
 
+//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//				view.getContext(), android.R.layout.simple_list_item_1,
+//				android.R.id.text1, strings);
+//		getListView().setAdapter(adapter);
+		
 		BaseAdapter adapter = new MyAdapter(view.getContext(), strings);
 		getListView().setAdapter(adapter);
 	}

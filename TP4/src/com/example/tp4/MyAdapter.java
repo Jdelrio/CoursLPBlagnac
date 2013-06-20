@@ -34,10 +34,23 @@ public class MyAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = inflater.inflate(R.layout.list_item, null);
-		TextView textView = (TextView) view.findViewById(android.R.id.text1);
-		textView.setText(data[position]);
+		View view;
+		ViewHolder holder;
+		if (convertView == null) {
+			view = inflater.inflate(R.layout.list_item, null);
+			holder = new ViewHolder();
+			holder.textView = (TextView) view.findViewById(android.R.id.text1);
+			view.setTag(holder);
+		} else {
+			view = convertView;
+			holder = (ViewHolder) view.getTag();
+		}
+		holder.textView.setText(data[position]);
 		return view;
+	}
+
+	private class ViewHolder {
+		TextView textView;
 	}
 
 }
