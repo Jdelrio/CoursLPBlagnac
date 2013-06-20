@@ -34,7 +34,7 @@ public class MyAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = inflater.inflate(android.R.layout.simple_list_item_1, null);
+		View view = inflater.inflate(R.layout.list_item, null);
 		TextView textView = (TextView) view.findViewById(android.R.id.text1);
 		textView.setText(data[position]);
 		return view;
