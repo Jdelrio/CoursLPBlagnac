@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.juliendelrio.tp2.R;
-import com.juliendelrio.tp2.dummy.DummyContent;
+import com.juliendelrio.githubdata.data.UserRepository;
 
 /**
  * A fragment representing a single Statut detail screen. This fragment is
@@ -25,7 +24,7 @@ public class StatutDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private UserRepository mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,8 +41,11 @@ public class StatutDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
+			mItem = Data
+					.getInstance()
+					.getLastRepositoriesList()
+					.get(Integer
+							.parseInt(getArguments().getString(ARG_ITEM_ID)));
 		}
 	}
 
@@ -56,7 +58,7 @@ public class StatutDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.statut_detail))
-					.setText(mItem.content);
+					.setText(mItem.name);
 		}
 
 		return rootView;

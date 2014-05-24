@@ -6,8 +6,11 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.juliendelrio.tp2.dummy.DummyContent;
+import com.juliendelrio.githubdata.data.SearchRequestResult;
+import com.juliendelrio.githubdata.data.UserRepository;
+import com.juliendelrio.tp2.Data.UpdateLastRepositoriesListListener;
 
 /**
  * A list fragment representing a list of Statuts. This fragment also supports
@@ -71,9 +74,10 @@ public class StatutListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+		setListAdapter(new ArrayAdapter<UserRepository>(
+				getActivity(), android.R.layout.simple_list_item_activated_1,
+				android.R.id.text1, Data.getInstance()
+						.getLastRepositoriesList()));
 	}
 
 	@Override
@@ -116,7 +120,8 @@ public class StatutListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		// mCallbacks.onItemSelected(Data.getInstance().getLastRepositoriesList().get(position).id);
+		mCallbacks.onItemSelected(Integer.toString(position));
 	}
 
 	@Override
@@ -148,5 +153,22 @@ public class StatutListFragment extends ListFragment {
 		}
 
 		mActivatedPosition = position;
+	}
+
+	@Override
+	public void onResume() {
+		Data.getInstance().updateLastRepositoriesList(new UpdateLastRepositoriesListListener() {
+			
+			@Override
+			public void onSucceeded() {
+				((ArrayAdapter<SearchRequestResult.Repository>)getListAdapter()).notifyDataSetChanged();
+			}
+			
+			@Override
+			public void onFailed(Throwable error) {
+				Toast.makeText(getActivity(), "Get list error", Toast.LENGTH_SHORT).show();
+			}
+		});
+		super.onResume();
 	}
 }

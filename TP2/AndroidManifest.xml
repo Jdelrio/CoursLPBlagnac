@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -28,7 +29,7 @@
             android:parentActivityName="com.juliendelrio.tp2.StatutListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.juliendelrio.tp1.StatutListActivity" />
+                android:value="com.juliendelrio.tp2.StatutListActivity" />
         </activity>
     </application>
 
