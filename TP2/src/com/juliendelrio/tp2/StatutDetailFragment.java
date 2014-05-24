@@ -1,13 +1,25 @@
 package com.juliendelrio.tp2;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juliendelrio.githubdata.data.UserRepository;
+import com.squareup.picasso.Picasso;
 
 /**
  * A fragment representing a single Statut detail screen. This fragment is
@@ -15,11 +27,17 @@ import com.juliendelrio.githubdata.data.UserRepository;
  * tablets) or a {@link StatutDetailActivity} on handsets.
  */
 public class StatutDetailFragment extends Fragment {
+	private final SimpleDateFormat dateFormatRead = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	private final SimpleDateFormat dateFormatWrite = new SimpleDateFormat(
+			"dd-MM-yyyy HH:mm");
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
+	private static final String TAG = StatutDetailFragment.class
+			.getSimpleName();
 
 	/**
 	 * The dummy content this fragment is presenting.
@@ -59,6 +77,35 @@ public class StatutDetailFragment extends Fragment {
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.statut_detail))
 					.setText(mItem.name);
+			((TextView) rootView.findViewById(R.id.description))
+					.setText(mItem.description);
+			((TextView) rootView.findViewById(R.id.owner))
+					.setText(mItem.owner.login);
+			try {
+				Date date = dateFormatRead.parse(mItem.created_at);
+				((TextView) rootView.findViewById(R.id.created))
+						.setText(dateFormatWrite.format(date));
+			} catch (ParseException e) {
+				Log.e(TAG, "Error parsing date", e);
+			}
+
+			ImageView imageView = ((ImageView) rootView
+					.findViewById(R.id.imageView_owner));
+			Picasso.with(inflater.getContext()).load(mItem.owner.avatar_url
+
+			).into(imageView);
+			((Button) rootView.findViewById(R.id.seeOnWebsite))
+					.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Intent intent = new Intent(Intent.ACTION_VIEW);
+							intent.setData(Uri.parse(mItem.html_url));
+							getActivity().startActivity(intent);
+
+						}
+					});
+			;
 		}
 
 		return rootView;

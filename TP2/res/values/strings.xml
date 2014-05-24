@@ -3,5 +3,7 @@
 
     <string name="app_name">TP2</string>
     <string name="title_statut_detail">Statut Detail</string>
+    <string name="see_on_github">See on Github</string>
+    <string name="created_label">Created :</string>
 
 </resources>
