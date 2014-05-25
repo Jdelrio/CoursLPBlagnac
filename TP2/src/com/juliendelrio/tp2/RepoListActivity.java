@@ -6,22 +6,22 @@ import android.support.v4.app.FragmentActivity;
 import com.juliendelrio.tp2.R;
 
 /**
- * An activity representing a list of Statuts. This activity has different
+ * An activity representing a list of Repos. This activity has different
  * presentations for handset and tablet-size devices. On handsets, the activity
  * presents a list of items, which when touched, lead to a
- * {@link StatutDetailActivity} representing item details. On tablets, the
+ * {@link RepoDetailActivity} representing item details. On tablets, the
  * activity presents the list of items and item details side-by-side using two
  * vertical panes.
  * <p>
  * The activity makes heavy use of fragments. The list of items is a
- * {@link StatutListFragment} and the item details (if present) is a
- * {@link StatutDetailFragment}.
+ * {@link RepoListFragment} and the item details (if present) is a
+ * {@link RepoDetailFragment}.
  * <p>
  * This activity also implements the required
- * {@link StatutListFragment.Callbacks} interface to listen for item selections.
+ * {@link RepoListFragment.Callbacks} interface to listen for item selections.
  */
-public class StatutListActivity extends FragmentActivity implements
-		StatutListFragment.Callbacks {
+public class RepoListActivity extends FragmentActivity implements
+		RepoListFragment.Callbacks {
 
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -43,7 +43,7 @@ public class StatutListActivity extends FragmentActivity implements
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((StatutListFragment) getSupportFragmentManager().findFragmentById(
+			((RepoListFragment) getSupportFragmentManager().findFragmentById(
 					R.id.statut_list)).setActivateOnItemClick(true);
 		}
 
@@ -51,7 +51,7 @@ public class StatutListActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * Callback method from {@link StatutListFragment.Callbacks} indicating that
+	 * Callback method from {@link RepoListFragment.Callbacks} indicating that
 	 * the item with the given ID was selected.
 	 */
 	@Override
@@ -61,8 +61,8 @@ public class StatutListActivity extends FragmentActivity implements
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
-			arguments.putString(StatutDetailFragment.ARG_ITEM_ID, id);
-			StatutDetailFragment fragment = new StatutDetailFragment();
+			arguments.putString(RepoDetailFragment.ARG_ITEM_ID, id);
+			RepoDetailFragment fragment = new RepoDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
 					.replace(R.id.statut_detail_container, fragment).commit();
@@ -70,8 +70,8 @@ public class StatutListActivity extends FragmentActivity implements
 		} else {
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID.
-			Intent detailIntent = new Intent(this, StatutDetailActivity.class);
-			detailIntent.putExtra(StatutDetailFragment.ARG_ITEM_ID, id);
+			Intent detailIntent = new Intent(this, RepoDetailActivity.class);
+			detailIntent.putExtra(RepoDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
 	}

@@ -22,11 +22,11 @@ import com.juliendelrio.githubdata.data.UserRepository;
 import com.squareup.picasso.Picasso;
 
 /**
- * A fragment representing a single Statut detail screen. This fragment is
- * either contained in a {@link StatutListActivity} in two-pane mode (on
- * tablets) or a {@link StatutDetailActivity} on handsets.
+ * A fragment representing a single Repo detail screen. This fragment is
+ * either contained in a {@link RepoListActivity} in two-pane mode (on
+ * tablets) or a {@link RepoDetailActivity} on handsets.
  */
-public class StatutDetailFragment extends Fragment {
+public class RepoDetailFragment extends Fragment {
 	private final SimpleDateFormat dateFormatRead = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 	private final SimpleDateFormat dateFormatWrite = new SimpleDateFormat(
@@ -36,7 +36,7 @@ public class StatutDetailFragment extends Fragment {
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
-	private static final String TAG = StatutDetailFragment.class
+	private static final String TAG = RepoDetailFragment.class
 			.getSimpleName();
 
 	/**
@@ -48,7 +48,7 @@ public class StatutDetailFragment extends Fragment {
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
 	 */
-	public StatutDetailFragment() {
+	public RepoDetailFragment() {
 	}
 
 	@Override

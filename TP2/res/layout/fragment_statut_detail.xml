@@ -19,7 +19,7 @@
             android:padding="16dp"
             android:text="Repo name"
             android:textIsSelectable="true"
-            tools:context="com.juliendelrio.tp2.StatutDetailFragment" />
+            tools:context="com.juliendelrio.tp2.RepoDetailFragment" />
 
         <TextView
             android:id="@+id/description"
