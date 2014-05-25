@@ -3,7 +3,6 @@ package com.juliendelrio.tp2;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.juliendelrio.githubdata.GithubApi;
 import com.juliendelrio.githubdata.data.UserRepository;
 import com.squareup.picasso.Picasso;
 
@@ -59,7 +59,7 @@ public class StatutDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = Data
+			mItem = GithubApi
 					.getInstance()
 					.getLastRepositoriesList()
 					.get(Integer

@@ -1,4 +1,4 @@
-package com.juliendelrio.tp2;
+package com.juliendelrio.githubdata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,24 +8,23 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import android.util.Log;
 
-import com.juliendelrio.githubdata.GithubRestClient;
 import com.juliendelrio.githubdata.GithubRestClient.IGithubRestClient;
 import com.juliendelrio.githubdata.data.UserRepository;
 
-public class Data {
-	private static String TAG = Data.class.getSimpleName();
-	private static Data singleton;
+public class GithubApi {
+	private static String TAG = GithubApi.class.getSimpleName();
+	private static GithubApi singleton;
 	private ArrayList<UserRepository> lastRepositoriesList;
 	private IGithubRestClient githubRestClient;
 
-	public static Data getInstance() {
+	public static GithubApi getInstance() {
 		if (singleton == null) {
-			singleton = new Data();
+			singleton = new GithubApi();
 		}
 		return singleton;
 	}
 
-	private Data() {
+	private GithubApi() {
 		lastRepositoriesList = new ArrayList<UserRepository>();
 		githubRestClient = GithubRestClient.create();
 	}

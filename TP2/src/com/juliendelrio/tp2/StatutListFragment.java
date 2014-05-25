@@ -17,9 +17,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.juliendelrio.githubdata.GithubApi;
+import com.juliendelrio.githubdata.GithubApi.UpdateLastRepositoriesListListener;
 import com.juliendelrio.githubdata.data.SearchRequestResult;
 import com.juliendelrio.githubdata.data.UserRepository;
-import com.juliendelrio.tp2.Data.UpdateLastRepositoriesListListener;
 
 /**
  * A list fragment representing a list of Statuts. This fragment also supports
@@ -101,7 +102,7 @@ public class StatutListFragment extends Fragment {
 		listView = (ListView) view.findViewById(android.R.id.list);
 		listView.setAdapter(new ArrayAdapter<UserRepository>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, Data.getInstance()
+				android.R.id.text1, GithubApi.getInstance()
 						.getLastRepositoriesList()));
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -208,7 +209,7 @@ public class StatutListFragment extends Fragment {
 		if ("".equals(searchText)){
 			searchText = "JulienDelRio";
 		}
-		Data.getInstance().updateLastRepositoriesList(searchText,
+		GithubApi.getInstance().updateLastRepositoriesList(searchText,
 				new UpdateLastRepositoriesListListener() {
 
 					@Override
