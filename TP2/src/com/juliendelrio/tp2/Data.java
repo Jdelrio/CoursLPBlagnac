@@ -34,9 +34,9 @@ public class Data {
 		return lastRepositoriesList;
 	}
 
-	public void updateLastRepositoriesList(
+	public void updateLastRepositoriesList(String searchKey,
 			final UpdateLastRepositoriesListListener listener) {
-		githubRestClient.listGetUserRepositoriesList("JulienDelRio",
+		githubRestClient.listGetUserRepositoriesList(searchKey,
 				new Callback<List<UserRepository>>() {
 
 					@Override
@@ -54,8 +54,7 @@ public class Data {
 				});
 	}
 
-	public void updateLastRepositoriesList(
-			List<UserRepository> list) {
+	public void updateLastRepositoriesList(List<UserRepository> list) {
 		lastRepositoriesList.clear();
 		lastRepositoriesList.addAll(list);
 	}

@@ -2,10 +2,19 @@ package com.juliendelrio.tp2;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.juliendelrio.githubdata.data.SearchRequestResult;
@@ -21,7 +30,7 @@ import com.juliendelrio.tp2.Data.UpdateLastRepositoriesListListener;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class StatutListFragment extends ListFragment {
+public class StatutListFragment extends Fragment {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -39,6 +48,14 @@ public class StatutListFragment extends ListFragment {
 	 * The current activated item position. Only used on tablets.
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
+
+	private ListView listView;
+
+	private EditText editTextSearch;
+
+	private ImageButton imageButtonSearch;
+
+	private ProgressBar progressBarSearch;
 
 	/**
 	 * A callback interface that all activities containing this fragment must
@@ -74,10 +91,38 @@ public class StatutListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<UserRepository>(
-				getActivity(), android.R.layout.simple_list_item_activated_1,
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_statut_list, container,
+				false);
+		listView = (ListView) view.findViewById(android.R.id.list);
+		listView.setAdapter(new ArrayAdapter<UserRepository>(getActivity(),
+				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, Data.getInstance()
 						.getLastRepositoriesList()));
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mCallbacks.onItemSelected(Integer.toString(position));
+			}
+		});
+		editTextSearch = (EditText) view.findViewById(R.id.et_search);
+		imageButtonSearch = (ImageButton) view
+				.findViewById(R.id.ib_search);
+		imageButtonSearch.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				updateList();
+			}
+		});
+		progressBarSearch = (ProgressBar) view.findViewById(R.id.pb_search);
+		return view;
 	}
 
 	@Override
@@ -114,17 +159,6 @@ public class StatutListFragment extends ListFragment {
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position,
-			long id) {
-		super.onListItemClick(listView, view, position, id);
-
-		// Notify the active callbacks interface (the activity, if the
-		// fragment is attached to one) that an item has been selected.
-		// mCallbacks.onItemSelected(Data.getInstance().getLastRepositoriesList().get(position).id);
-		mCallbacks.onItemSelected(Integer.toString(position));
-	}
-
-	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		if (mActivatedPosition != ListView.INVALID_POSITION) {
@@ -145,6 +179,10 @@ public class StatutListFragment extends ListFragment {
 						: ListView.CHOICE_MODE_NONE);
 	}
 
+	private ListView getListView() {
+		return listView;
+	}
+
 	private void setActivatedPosition(int position) {
 		if (position == ListView.INVALID_POSITION) {
 			getListView().setItemChecked(mActivatedPosition, false);
@@ -157,18 +195,35 @@ public class StatutListFragment extends ListFragment {
 
 	@Override
 	public void onResume() {
-		Data.getInstance().updateLastRepositoriesList(new UpdateLastRepositoriesListListener() {
-			
-			@Override
-			public void onSucceeded() {
-				((ArrayAdapter<SearchRequestResult.Repository>)getListAdapter()).notifyDataSetChanged();
-			}
-			
-			@Override
-			public void onFailed(Throwable error) {
-				Toast.makeText(getActivity(), "Get list error", Toast.LENGTH_SHORT).show();
-			}
-		});
+		getActivity().getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		updateList();
 		super.onResume();
+	}
+
+	private void updateList() {
+		progressBarSearch.setVisibility(View.VISIBLE);
+		String searchText = editTextSearch.getText().toString();
+		searchText.trim();
+		if ("".equals(searchText)){
+			searchText = "JulienDelRio";
+		}
+		Data.getInstance().updateLastRepositoriesList(searchText,
+				new UpdateLastRepositoriesListListener() {
+
+					@Override
+					public void onSucceeded() {
+						((ArrayAdapter<SearchRequestResult.Repository>) getListView()
+								.getAdapter()).notifyDataSetChanged();
+						progressBarSearch.setVisibility(View.GONE);
+					}
+
+					@Override
+					public void onFailed(Throwable error) {
+						Toast.makeText(getActivity(), "Get list error",
+								Toast.LENGTH_SHORT).show();
+						progressBarSearch.setVisibility(View.GONE);
+					}
+				});
 	}
 }
