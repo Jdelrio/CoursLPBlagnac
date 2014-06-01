@@ -6,7 +6,9 @@ import java.util.Date;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +52,7 @@ public class RepoDetailFragment extends Fragment {
 	private Button buttonStartCalculAsyncTask;
 	private Button buttonSendRepo;
 	private PlayWithTreads playWithTreads;
+	private Handler handler = new Handler();
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -124,7 +127,8 @@ public class RepoDetailFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					playWithTreads.startCalcul();
-
+					playWithTreads.doMyCalcul();
+					playWithTreads.endCalcul();
 				}
 			});
 			buttonStartCalculThread = (Button) rootView
@@ -133,8 +137,20 @@ public class RepoDetailFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-
+					playWithTreads.startCalcul();
+					Runnable runnable = new Runnable() {
+						public void run() {
+							playWithTreads.doMyCalcul();
+							Runnable updateUI = new Runnable() {
+								public void run() {
+									playWithTreads.endCalcul();
+								}
+							};
+							handler.post(updateUI);
+						}
+					};
+					Thread thread = new Thread(runnable);
+					thread.start();
 				}
 			});
 			buttonStartCalculAsyncTask = (Button) rootView
@@ -144,8 +160,28 @@ public class RepoDetailFragment extends Fragment {
 
 						@Override
 						public void onClick(View v) {
-							// TODO Auto-generated method stub
+							AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
 
+								@Override
+								protected void onPreExecute() {
+									playWithTreads.startCalcul();
+									super.onPreExecute();
+								}
+
+								@Override
+								protected Void doInBackground(Void... params) {
+									playWithTreads.doMyCalcul();
+									return null;
+								}
+
+								@Override
+								protected void onPostExecute(Void result) {
+									playWithTreads.endCalcul();
+									super.onPostExecute(result);
+								}
+
+							};
+							task.execute();
 						}
 					});
 
@@ -159,7 +195,8 @@ public class RepoDetailFragment extends Fragment {
 
 			}
 		});
-		playWithTreads = new PlayWithTreads(progressionTextView, progressionProgressBar);
+		playWithTreads = new PlayWithTreads(progressionTextView,
+				progressionProgressBar);
 
 		return rootView;
 	}
