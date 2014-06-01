@@ -8,4 +8,9 @@ public class RepoBranch {
 		public String sha;
 		public String url;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }
