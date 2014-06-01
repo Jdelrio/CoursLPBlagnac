@@ -8,6 +8,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
+import com.juliendelrio.githubdata.data.RepoBranch;
 import com.juliendelrio.githubdata.data.SearchRequestResult;
 import com.juliendelrio.githubdata.data.UserRepository;
 
@@ -35,6 +36,10 @@ public class GithubRestClient {
 		@GET("/" + RequestTypes.USERS + "/{user}/repos")
 		void listGetUserRepositoriesList(@Path("user") String user,
 				Callback<List<UserRepository>> cb);
+
+		@GET("/repos/{owner}/{repo}/branches")
+		void getRepoBranches(@Path("owner") String owner,
+				@Path("repo") String repo, Callback<List<RepoBranch>> cb);
 	}
 
 	public final class RequestTypes {

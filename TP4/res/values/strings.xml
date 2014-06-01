@@ -12,5 +12,6 @@
     <string name="startCalculThread">Thread</string>
     <string name="StartCalculAsyncTask">AsyncTask</string>
     <string name="sendRepo">Send Repo</string>
+    <string name="branches">Branches</string>
 
 </resources>

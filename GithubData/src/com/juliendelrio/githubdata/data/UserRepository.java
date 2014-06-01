@@ -1,5 +1,8 @@
 package com.juliendelrio.githubdata.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRepository {
 
 	public int id;
@@ -18,6 +21,7 @@ public class UserRepository {
 	public String pushed_at;
 	public String homepage;
 	public int size;
+	public List<RepoBranch> branches = new ArrayList<RepoBranch>();
 
 	@Override
 	public String toString() {

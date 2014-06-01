@@ -9,6 +9,7 @@ import retrofit.client.Response;
 import android.util.Log;
 
 import com.juliendelrio.githubdata.GithubRestClient.IGithubRestClient;
+import com.juliendelrio.githubdata.data.RepoBranch;
 import com.juliendelrio.githubdata.data.UserRepository;
 
 public class GithubApi {
@@ -42,13 +43,15 @@ public class GithubApi {
 					public void success(List<UserRepository> result,
 							Response response) {
 						updateLastRepositoriesList(result);
-						listener.onSucceeded();
+						if (listener != null)
+							listener.onSucceeded();
 					}
 
 					@Override
 					public void failure(RetrofitError e) {
 						Log.d(TAG, "Load list search error", e);
-						listener.onFailed(e);
+						if (listener != null)
+							listener.onFailed(e);
 					}
 				});
 	}
@@ -58,10 +61,35 @@ public class GithubApi {
 		lastRepositoriesList.addAll(list);
 	}
 
-	public interface UpdateLastRepositoriesListListener {
+	public void updateBranchesList(final UserRepository repository,
+			final RequestListener listener) {
+		githubRestClient.getRepoBranches(repository.owner.login,
+				repository.name, new Callback<List<RepoBranch>>() {
+
+					@Override
+					public void success(List<RepoBranch> list, Response response) {
+						repository.branches.clear();
+						repository.branches.addAll(list);
+						if (listener != null)
+							listener.onSucceeded();
+					}
+
+					@Override
+					public void failure(RetrofitError e) {
+						Log.d(TAG, "Load list search error", e);
+						if (listener != null)
+							listener.onFailed(e);
+					}
+				});
+	}
+
+	public interface RequestListener {
 		public void onSucceeded();
 
 		public void onFailed(Throwable error);
+	}
+
+	public interface UpdateLastRepositoriesListListener extends RequestListener {
 	}
 
 }

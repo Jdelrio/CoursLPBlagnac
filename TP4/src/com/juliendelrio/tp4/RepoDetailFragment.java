@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,12 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.juliendelrio.githubdata.GithubApi;
+import com.juliendelrio.githubdata.GithubApi.RequestListener;
 import com.juliendelrio.githubdata.data.UserRepository;
 import com.squareup.picasso.Picasso;
 
@@ -53,6 +57,7 @@ public class RepoDetailFragment extends Fragment {
 	private Button buttonSendRepo;
 	private PlayWithTreads playWithTreads;
 	private Handler handler = new Handler();
+	private ListView listView;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -85,26 +90,34 @@ public class RepoDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.statut_detail))
+			View rootView2 = rootView;
+			listView = (ListView) rootView2.findViewById(android.R.id.list);
+			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+				View header = inflater.inflate(
+						R.layout.fragment_statut_detail_listview_header, null);
+				listView.addHeaderView(header);
+				rootView2 = header;
+			}
+			((TextView) rootView2.findViewById(R.id.statut_detail))
 					.setText(mItem.name);
-			((TextView) rootView.findViewById(R.id.description))
+			((TextView) rootView2.findViewById(R.id.description))
 					.setText(mItem.description);
-			((TextView) rootView.findViewById(R.id.owner))
+			((TextView) rootView2.findViewById(R.id.owner))
 					.setText(mItem.owner.login);
 			try {
 				Date date = dateFormatRead.parse(mItem.created_at);
-				((TextView) rootView.findViewById(R.id.created))
+				((TextView) rootView2.findViewById(R.id.created))
 						.setText(dateFormatWrite.format(date));
 			} catch (ParseException e) {
 				Log.e(TAG, "Error parsing date", e);
 			}
 
-			ImageView imageView = ((ImageView) rootView
+			ImageView imageView = ((ImageView) rootView2
 					.findViewById(R.id.imageView_owner));
 			Picasso.with(inflater.getContext()).load(mItem.owner.avatar_url
 
 			).into(imageView);
-			((Button) rootView.findViewById(R.id.seeOnWebsite))
+			((Button) rootView2.findViewById(R.id.seeOnWebsite))
 					.setOnClickListener(new OnClickListener() {
 
 						@Override
@@ -116,11 +129,11 @@ public class RepoDetailFragment extends Fragment {
 						}
 					});
 			;
-			progressionTextView = (TextView) rootView
+			progressionTextView = (TextView) rootView2
 					.findViewById(R.id.progression);
-			progressionProgressBar = (ProgressBar) rootView
+			progressionProgressBar = (ProgressBar) rootView2
 					.findViewById(R.id.progressBarPlayWithThreads);
-			buttonStartCalculNormal = (Button) rootView
+			buttonStartCalculNormal = (Button) rootView2
 					.findViewById(R.id.buttonStartCalculNormal);
 			buttonStartCalculNormal.setOnClickListener(new OnClickListener() {
 
@@ -131,7 +144,7 @@ public class RepoDetailFragment extends Fragment {
 					playWithTreads.endCalcul();
 				}
 			});
-			buttonStartCalculThread = (Button) rootView
+			buttonStartCalculThread = (Button) rootView2
 					.findViewById(R.id.buttonStartCalculThread);
 			buttonStartCalculThread.setOnClickListener(new OnClickListener() {
 
@@ -153,7 +166,7 @@ public class RepoDetailFragment extends Fragment {
 					thread.start();
 				}
 			});
-			buttonStartCalculAsyncTask = (Button) rootView
+			buttonStartCalculAsyncTask = (Button) rootView2
 					.findViewById(R.id.buttonStartCalculAsyncTask);
 			buttonStartCalculAsyncTask
 					.setOnClickListener(new OnClickListener() {
@@ -185,21 +198,44 @@ public class RepoDetailFragment extends Fragment {
 						}
 					});
 
-		}
-		buttonSendRepo = (Button) rootView.findViewById(R.id.buttonSendRepo);
-		buttonSendRepo.setOnClickListener(new OnClickListener() {
+			buttonSendRepo = (Button) rootView2
+					.findViewById(R.id.buttonSendRepo);
+			buttonSendRepo.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_SEND);
-				intent.setType("text/plain");
-				intent.putExtra(Intent.EXTRA_TEXT, "Va voir ce compte github, il est top : " + mItem.html_url);
-				intent.putExtra(Intent.EXTRA_SUBJECT, "Un repo Github à découvrir");
-				getActivity().startActivity(intent);
-			}
-		});
-		playWithTreads = new PlayWithTreads(progressionTextView,
-				progressionProgressBar);
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_SEND);
+					intent.setType("text/plain");
+					intent.putExtra(Intent.EXTRA_TEXT,
+							"Va voir ce compte github, il est top : "
+									+ mItem.html_url);
+					intent.putExtra(Intent.EXTRA_SUBJECT,
+							"Un repo Github à découvrir");
+					getActivity().startActivity(intent);
+				}
+			});
+			playWithTreads = new PlayWithTreads(progressionTextView,
+					progressionProgressBar);
+		}
+
+		// Update repo branches
+		GithubApi.getInstance().updateBranchesList(mItem,
+				new RequestListener() {
+
+					@Override
+					public void onSucceeded() {
+						BaseAdapter baseAdapter = (BaseAdapter) listView
+								.getAdapter();
+						if (baseAdapter != null)
+							baseAdapter.notifyDataSetChanged();
+					}
+
+					@Override
+					public void onFailed(Throwable error) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		return rootView;
 	}
