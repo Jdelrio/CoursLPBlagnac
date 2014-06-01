@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TP2</string>
+    <string name="title_statut_detail">Repo Detail</string>
+    <string name="see_on_github">See on Github</string>
+    <string name="created_label">Created :</string>
+    <string name="owner">Owner</string>
+
+</resources>
