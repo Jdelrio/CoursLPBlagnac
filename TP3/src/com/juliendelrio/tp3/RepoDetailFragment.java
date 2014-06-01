@@ -123,7 +123,7 @@ public class RepoDetailFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
+					playWithTreads.startCalcul();
 
 				}
 			});
