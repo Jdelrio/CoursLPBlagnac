@@ -96,6 +96,10 @@ public class RepoDetailFragment extends Fragment {
 		if (mItem != null) {
 			View rootView2 = rootView;
 			listView = (ListView) rootView2.findViewById(android.R.id.list);
+			ArrayAdapter<RepoBranch> adapter = new ArrayAdapter<RepoBranch>(
+					inflater.getContext(), android.R.layout.simple_list_item_1,
+					mItem.branches);
+			listView.setAdapter(adapter);
 
 			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				View header = inflater.inflate(
