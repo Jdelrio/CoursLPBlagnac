@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TP3</string>
+    <string name="title_statut_detail">Détail du dépot</string>
+    <string name="see_on_github">Voir sur Github</string>
+    <string name="created_label">Créé le :</string>
+    <string name="owner">Propriétaire</string>
+    <string name="play_with_threads">Jouons avec les threads</string>
+    <string name="progression">Progression :</string>
+    <string name="startCalculNormal">Normal</string>
+    <string name="startCalculThread">Thread</string>
+    <string name="StartCalculAsyncTask">AsyncTask</string>
+    <string name="sendRepo">Envoyer le dépot</string>
+
+</resources>
