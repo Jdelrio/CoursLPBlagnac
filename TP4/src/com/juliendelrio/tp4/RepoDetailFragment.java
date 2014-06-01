@@ -16,15 +16,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.juliendelrio.githubdata.GithubApi;
 import com.juliendelrio.githubdata.GithubApi.RequestListener;
+import com.juliendelrio.githubdata.data.RepoBranch;
 import com.juliendelrio.githubdata.data.UserRepository;
 import com.squareup.picasso.Picasso;
 
@@ -92,6 +96,7 @@ public class RepoDetailFragment extends Fragment {
 		if (mItem != null) {
 			View rootView2 = rootView;
 			listView = (ListView) rootView2.findViewById(android.R.id.list);
+
 			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				View header = inflater.inflate(
 						R.layout.fragment_statut_detail_listview_header, null);
@@ -224,8 +229,14 @@ public class RepoDetailFragment extends Fragment {
 
 					@Override
 					public void onSucceeded() {
-						BaseAdapter baseAdapter = (BaseAdapter) listView
-								.getAdapter();
+						ListAdapter adapter = listView.getAdapter();
+						BaseAdapter baseAdapter;
+						if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+							baseAdapter = (BaseAdapter) ((HeaderViewListAdapter) adapter)
+									.getWrappedAdapter();
+						} else {
+							baseAdapter = (BaseAdapter) adapter;
+						}
 						if (baseAdapter != null)
 							baseAdapter.notifyDataSetChanged();
 					}
