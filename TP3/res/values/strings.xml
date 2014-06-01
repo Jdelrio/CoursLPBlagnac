@@ -6,5 +6,11 @@
     <string name="see_on_github">See on Github</string>
     <string name="created_label">Created :</string>
     <string name="owner">Owner</string>
+    <string name="play_with_threads">Play with threads</string>
+    <string name="progression">Progression :</string>
+    <string name="startCalculNormal">Normal</string>
+    <string name="startCalculThread">Thread</string>
+    <string name="StartCalculAsyncTask">AsyncTask</string>
+    <string name="sendRepo">Send Repo</string>
 
 </resources>

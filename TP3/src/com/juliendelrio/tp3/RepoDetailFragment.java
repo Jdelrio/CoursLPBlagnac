@@ -3,6 +3,7 @@ package com.juliendelrio.tp3;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,16 +15,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.juliendelrio.githubdata.GithubApi;
 import com.juliendelrio.githubdata.data.UserRepository;
-import com.juliendelrio.tp3.R;
 import com.squareup.picasso.Picasso;
 
 /**
- * A fragment representing a single Repo detail screen. This fragment is
- * either contained in a {@link RepoListActivity} in two-pane mode (on
- * tablets) or a {@link RepoDetailActivity} on handsets.
+ * A fragment representing a single Repo detail screen. This fragment is either
+ * contained in a {@link RepoListActivity} in two-pane mode (on tablets) or a
+ * {@link RepoDetailActivity} on handsets.
  */
 public class RepoDetailFragment extends Fragment {
 	private final SimpleDateFormat dateFormatRead = new SimpleDateFormat(
@@ -35,13 +37,19 @@ public class RepoDetailFragment extends Fragment {
 	 * represents.
 	 */
 	public static final String ARG_ITEM_ID = "item_id";
-	private static final String TAG = RepoDetailFragment.class
-			.getSimpleName();
+	private static final String TAG = RepoDetailFragment.class.getSimpleName();
 
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
 	private UserRepository mItem;
+	private TextView progressionTextView;
+	private ProgressBar progressionProgressBar;
+	private Button buttonStartCalculNormal;
+	private Button buttonStartCalculThread;
+	private Button buttonStartCalculAsyncTask;
+	private Button buttonSendRepo;
+	private PlayWithTreads playWithTreads;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -105,7 +113,53 @@ public class RepoDetailFragment extends Fragment {
 						}
 					});
 			;
+			progressionTextView = (TextView) rootView
+					.findViewById(R.id.progression);
+			progressionProgressBar = (ProgressBar) rootView
+					.findViewById(R.id.progressBarPlayWithThreads);
+			buttonStartCalculNormal = (Button) rootView
+					.findViewById(R.id.buttonStartCalculNormal);
+			buttonStartCalculNormal.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			buttonStartCalculThread = (Button) rootView
+					.findViewById(R.id.buttonStartCalculThread);
+			buttonStartCalculThread.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			buttonStartCalculAsyncTask = (Button) rootView
+					.findViewById(R.id.buttonStartCalculAsyncTask);
+			buttonStartCalculAsyncTask
+					.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+
 		}
+		buttonSendRepo = (Button) rootView.findViewById(R.id.buttonSendRepo);
+		buttonSendRepo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		playWithTreads = new PlayWithTreads(progressionTextView, progressionProgressBar);
 
 		return rootView;
 	}
