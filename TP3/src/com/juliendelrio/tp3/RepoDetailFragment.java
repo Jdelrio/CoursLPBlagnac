@@ -191,8 +191,11 @@ public class RepoDetailFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TEXT, "Va voir ce compte github, il est top : " + mItem.html_url);
+				intent.putExtra(Intent.EXTRA_SUBJECT, "Un repo Github à découvrir");
+				getActivity().startActivity(intent);
 			}
 		});
 		playWithTreads = new PlayWithTreads(progressionTextView,
