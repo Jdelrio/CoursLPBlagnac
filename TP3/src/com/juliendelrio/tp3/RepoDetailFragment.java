@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.juliendelrio.githubdata.GithubApi;
 import com.juliendelrio.githubdata.data.UserRepository;
+import com.juliendelrio.tp3.PlayWithTreads.OnProgressListener;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -127,7 +128,7 @@ public class RepoDetailFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					playWithTreads.startCalcul();
-					playWithTreads.doMyCalcul();
+					playWithTreads.doMyCalcul(null);
 					playWithTreads.endCalcul();
 				}
 			});
@@ -138,18 +139,20 @@ public class RepoDetailFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					playWithTreads.startCalcul();
-					Runnable runnable = new Runnable() {
+					Thread thread = new Thread(new Runnable() {
+
+						@Override
 						public void run() {
-							playWithTreads.doMyCalcul();
-							Runnable updateUI = new Runnable() {
+							playWithTreads.doMyCalcul(null);
+							handler.post(new Runnable() {
+
+								@Override
 								public void run() {
 									playWithTreads.endCalcul();
 								}
-							};
-							handler.post(updateUI);
+							});
 						}
-					};
-					Thread thread = new Thread(runnable);
+					});
 					thread.start();
 				}
 			});
@@ -161,6 +164,7 @@ public class RepoDetailFragment extends Fragment {
 						@Override
 						public void onClick(View v) {
 							AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+								int progression = 0;
 
 								@Override
 								protected void onPreExecute() {
@@ -170,7 +174,16 @@ public class RepoDetailFragment extends Fragment {
 
 								@Override
 								protected Void doInBackground(Void... params) {
-									playWithTreads.doMyCalcul();
+									playWithTreads
+											.doMyCalcul(new OnProgressListener() {
+
+												@Override
+												public void onProgress(
+														int pProgression) {
+													progression = pProgression;
+													publishProgress();
+												}
+											});
 									return null;
 								}
 
@@ -180,8 +193,17 @@ public class RepoDetailFragment extends Fragment {
 									super.onPostExecute(result);
 								}
 
+								@Override
+								protected void onProgressUpdate(Void... values) {
+									progressionTextView
+											.setText("Progression : "
+													+ progression);
+									super.onProgressUpdate(values);
+								}
+
 							};
 							task.execute();
+
 						}
 					});
 
@@ -193,8 +215,11 @@ public class RepoDetailFragment extends Fragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_SEND);
 				intent.setType("text/plain");
-				intent.putExtra(Intent.EXTRA_TEXT, "Va voir ce compte github, il est top : " + mItem.html_url);
-				intent.putExtra(Intent.EXTRA_SUBJECT, "Un repo Github à découvrir");
+				intent.putExtra(Intent.EXTRA_TEXT,
+						"Va voir ce compte github, il est top : "
+								+ mItem.html_url);
+				intent.putExtra(Intent.EXTRA_SUBJECT,
+						"Un repo Github Ã  dÃ©couvrir");
 				getActivity().startActivity(intent);
 			}
 		});
