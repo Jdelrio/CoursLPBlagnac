@@ -30,13 +30,17 @@ public class PlayWithTreads {
 		}
 	}
 
-	public void doMyCalcul() {
+	public void doMyCalcul(OnProgressListener listener) {
 		try {
 			if (progressBar != null)
 				progressBar.setProgress(0);
+			if (listener != null)
+				listener.onProgress(0);
 			Thread.sleep(500);
 			if (progressBar != null)
 				progressBar.setProgress(1);
+			if (listener != null)
+				listener.onProgress(1);
 			Thread.sleep(500);
 			if (progressBar != null)
 				progressBar.setProgress(2);
@@ -49,6 +53,8 @@ public class PlayWithTreads {
 			Thread.sleep(500);
 			if (progressBar != null)
 				progressBar.setProgress(5);
+			if (listener != null)
+				listener.onProgress(5);
 			Thread.sleep(500);
 			if (progressBar != null)
 				progressBar.setProgress(6);
@@ -69,8 +75,12 @@ public class PlayWithTreads {
 		}
 	}
 
+	public interface OnProgressListener {
+		public void onProgress(int progression);
+	}
+
 	public void endCalcul() {
 		if (progressionTextView != null)
-			progressionTextView.setText("Calcul stoppé");
+			progressionTextView.setText("Calcul stoppï¿½");
 	}
 }
